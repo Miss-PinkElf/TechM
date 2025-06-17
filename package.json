@@ -12,6 +12,7 @@
     "@types/react-dom": "^18.3.0",
     "antd": "^5.17.4",
     "axios": "^1.7.2",
+    "json-server": "^1.0.0-beta.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-router-dom": "^6.23.1",
@@ -24,7 +25,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-serve":"json-server db.json --port 3004"
+    "json-serve": "json-server public/db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [

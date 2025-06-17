@@ -1,8 +1,9 @@
 import React from "react";
 
 const Article: React.FC = () => {
-    
-  return <div>Article
+
+  return <div>
+    Article
 
   </div>;
 };

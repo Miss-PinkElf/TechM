@@ -34,10 +34,16 @@
       "like": 66
     }
   ],
-  "article/23":{
-    "title":"React之于Ts",
-    "info":{},
-    "content":""
-
-  }
+  "article/23": {
+    "title": "React之于Ts",
+    "info": {},
+    "content": ""
+  },
+  "getImage": [
+    { "url": "/image/1.png" },
+    { "url": "/image/2.png" },
+    { "url": "/image/3.png" },
+    { "url": "/image/4.png" },
+    { "url": "/image/5.png"}
+  ]
 }

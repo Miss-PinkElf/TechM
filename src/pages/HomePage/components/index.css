@@ -1,9 +1,18 @@
-.li{
-  width: 8px;
+.footer ul li{
+      width: 8px;
       height: 8px;
       margin: 4px;
       border-radius: 50%;
-      background: #fff;
+      background:wheat;
       opacity: 0.4;
+      cursor: pointer;
+}
+.footer ul li.active{
+      width: 12px;
+      height: 12px;
+      margin: 4px;
+      border-radius: 50%;
+      background:black;
+      opacity: 1;
       cursor: pointer;
 }
