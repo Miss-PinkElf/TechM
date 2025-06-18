@@ -49,18 +49,19 @@
 import React from 'react';
 import { Breadcrumb, Layout, Menu, theme } from 'antd';
 import HomePage from '../pages/HomePage';
+import { Outlet } from 'react-router-dom';
 const { Header, Content, Footer } = Layout;
 // const items = Array.from({ length: 15 }).map((_, index) => ({
 //   key: index + 1,
 //   label: `nav ${index + 1}`,
 // }));
-const items=[{key:1,label:"首页"}]
+const items = [{ key: 1, label: "首页" }]
 const LayoutPage: React.FC = () => {
-    const {
+  const {
     token: { colorBgContainer, borderRadiusLG },
   } = theme.useToken();
   return (
-      <Layout>
+    <Layout>
       <Header style={{ display: 'flex', alignItems: 'center' }}>
         <div className="demo-logo" />
         <Menu
@@ -72,7 +73,7 @@ const LayoutPage: React.FC = () => {
         />
       </Header>
       <Content style={{ padding: '0 48px' }}>
-      
+
         <div
           style={{
             background: colorBgContainer,
@@ -81,8 +82,8 @@ const LayoutPage: React.FC = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-          <HomePage/>
-          
+          <Outlet />
+
         </div>
       </Content>
       <Footer style={{ textAlign: 'center' }}>

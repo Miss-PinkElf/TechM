@@ -34,11 +34,131 @@
       "like": 66
     }
   ],
-  "article/23": {
-    "title": "React之于Ts",
-    "info": {},
-    "content": ""
-  },
+ "articles": [
+    {
+      "id": "23",
+      "type": "article",
+      "articleId": null,
+      "title": "深入 React Hooks：useEffect 的常见陷阱",
+      "content": "useEffect 是 React 中最强大的 Hook 之一，但也是最容易被误用的。本文将深入探讨 useEffect 的一些常见陷阱，例如无限循环、错误的依赖项数组以及如何处理数据获取...",
+      "author": {
+        "id": "user-101",
+        "name": "React 大师",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-101"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
+      "detailInfo": {
+        "ifLike": true,
+        "likeNum": 512,
+        "commentNum": 2,
+        "publicDate": "2025-06-19T10:00:00Z"
+      },
+      "reply": []
+    },
+    {
+      "id": "24",
+      "type": "article",
+      "articleId": null,
+      "title": "Spring Boot 3 与虚拟线程初探",
+      "content": "随着 Java 21 的发布，虚拟线程（Virtual Threads）为高并发应用带来了革命性的性能提升。本文将指导你如何在 Spring Boot 3 项目中启用并利用虚拟线程，并对比其与传统平台线程的性能差异。",
+      "author": {
+        "id": "user-202",
+        "name": "Java 布道者",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-202"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
+      "detailInfo": {
+        "ifLike": false,
+        "likeNum": 1024,
+        "commentNum": 1,
+        "publicDate": "2025-06-18T14:30:00Z"
+      },
+      "reply": []
+    }
+  ],
+  "comments": [
+    {
+      "id": "comment-1001",
+      "type": "comment",
+      "articleId": "23",
+      "title": "",
+      "content": "写得太好了，特别是关于清理函数的部分，之前一直没完全搞懂！",
+      "author": {
+        "id": "user-303",
+        "name": "前端学习者",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-303"
+      },
+      "imageUrl": null,
+      "detailInfo": {
+        "ifLike": false,
+        "likeNum": 25,
+        "commentNum": 1,
+        "publicDate": "2025-06-19T11:25:10Z"
+      },
+      "reply": [
+        {
+          "id": "comment-1002",
+          "type": "comment",
+          "articleId": "23",
+          "title": "",
+          "content": "是的，清理函数是 useEffect 的精髓，能有效防止内存泄漏。",
+          "author": {
+            "id": "user-101",
+            "name": "React 大师",
+            "avatarUrl": "https://i.pravatar.cc/150?u=user-101"
+          },
+          "imageUrl": null,
+          "detailInfo": {
+            "ifLike": true,
+            "likeNum": 15,
+            "commentNum": 0,
+            "publicDate": "2025-06-19T11:30:00Z"
+          },
+          "reply": []
+        }
+      ]
+    },
+    {
+      "id": "comment-1003",
+      "type": "comment",
+      "articleId": "23",
+      "title": "",
+      "content": "感谢分享，已收藏！",
+      "author": {
+        "id": "user-404",
+        "name": "路人甲",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-404"
+      },
+      "imageUrl": null,
+      "detailInfo": {
+        "ifLike": false,
+        "likeNum": 5,
+        "commentNum": 0,
+        "publicDate": "2025-06-19T12:00:00Z"
+      },
+      "reply": []
+    },
+    {
+      "id": "comment-2001",
+      "type": "comment",
+      "articleId": "24",
+      "title": "",
+      "content": "虚拟线程终于来了，迫不及待想在我的项目里试试！",
+      "author": {
+        "id": "user-505",
+        "name": "后端工程师",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-505"
+      },
+      "imageUrl": null,
+      "detailInfo": {
+        "ifLike": true,
+        "likeNum": 88,
+        "commentNum": 0,
+        "publicDate": "2025-06-18T15:00:00Z"
+      },
+      "reply": []
+    }
+  ],
   "getImage": [
     { "url": "/image/1.png" },
     { "url": "/image/2.png" },

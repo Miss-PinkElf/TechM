@@ -8,7 +8,14 @@ export const getImage = () => {
 export const getArticleAPI = (articleId: string) => {
   return http({
     method: 'get',
-    url: '/getArticleList',
+    url: `/articles/${articleId}`,
+  })
+}
+
+export const getCommentListAPI = (articleId: string) => {
+  return http({
+    method: "get",
+    url: '/comments',
     params: {
       articleId: articleId
     }

@@ -20,7 +20,7 @@ const routes: RouteObject[] = [
         element: <HomePage />,
       },
       {
-        path: "/article/:id",
+        path: "/article/:articleId",
         element: <Article />,
       },
     ],

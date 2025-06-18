@@ -1,6 +1,7 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Article, Author, MyComment } from '../types'
-import { getArticleAPI } from '../../utils/request';
+import { getArticleAPI, getCommentListAPI } from '../../utils/request';
+import { stat } from 'fs';
 interface ArticleState {
   article: Article | null;
   comments: MyComment[] | null;
@@ -12,10 +13,11 @@ const initialState: ArticleState = {
 export const getArticle = createAsyncThunk("article/getArticle",
   async (articleId: string, { rejectWithValue }) => {
     try {
-      const { article, commentList } = (await getArticleAPI(articleId)).data;
+      const res_article = (await getArticleAPI(articleId)).data;
+      const res_comments = (await getCommentListAPI(articleId)).data;
       return {
-        article: article,
-        commentList: commentList
+        article: res_article,
+        commentList: res_comments
       };
     }
     catch (e: any) {
@@ -41,9 +43,12 @@ const articleStore = createSlice({
   // },
   initialState,
   reducers: {
-    toggleLikes: (state, action: PayloadAction<string>) => {
+    toggleLikesComment: (state, action: PayloadAction<string>) => {
+
       const commentId = action.payload;
-      const nowComment = findComment(state.comments!, action.payload)
+
+      const nowComment = findComment(state.comments!, commentId)
+
       if (nowComment) {
         nowComment.detailInfo.ifLike = !nowComment.detailInfo.ifLike;
         nowComment.detailInfo.likeNum += (nowComment.detailInfo.ifLike ? 1 : -1)
@@ -65,14 +70,19 @@ const articleStore = createSlice({
       }
       state.comments?.push(newComment);
     },
-    addArticleMark: (state, action: PayloadAction<string>) => {
+    toggleArticleMark: (state, action: PayloadAction<string>) => {
       //undefined.ifBookMark undefined不能赋值 （TypeError: Cannot set properties of undefined）。
       //state.article?.detailInfo.ifBookMark = !state.article?.detailInfo.ifBookMark;
       state.article!.detailInfo.ifBookMark = !state.article?.detailInfo.ifBookMark;
       if (state.article!.detailInfo) {
         state.article!.detailInfo.bookmarks! += (state.article!.detailInfo.ifBookMark ? 1 : -1);//可选可能为空
       }
+    },
+    toggleArticleLikes: (state, action: PayloadAction<string>) => {
+      state.article!.detailInfo.ifLike = !state.article?.detailInfo.ifLike;
+      state.article!.detailInfo.likeNum! += (state.article!.detailInfo.likeNum ? 1 : -1);
     }
+
 
   },
   extraReducers: (bulider) => {
@@ -85,5 +95,5 @@ const articleStore = createSlice({
       })
   },
 })
-export const { toggleLikes, addComment, addArticleMark } = articleStore.actions;
+export const { toggleLikesComment, addComment, toggleArticleMark, toggleArticleLikes } = articleStore.actions;
 export default articleStore.reducer;

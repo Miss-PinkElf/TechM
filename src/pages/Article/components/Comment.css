@@ -1,0 +1,36 @@
+.comment-container {
+  display: flex;
+  padding: 16px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+
+.comment-left {
+  margin-right: 16px;
+}
+
+.comment-right {
+  flex: 1; /* 让右侧区域占据所有剩余空间 */
+  display: flex;
+  flex-direction: column; /* 让右侧内容垂直排列 */
+}
+
+.comment-content {
+  margin: 8px 0 !important; /* 覆盖 antd 的默认 margin */
+  color: #333;
+}
+
+.comment-footer {
+  display: flex;
+  justify-content: space-between; /* 日期和操作按钮两端对齐 */
+  align-items: center;
+  color: #8a919f;
+}
+
+.comment-actions .action-item {
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.comment-actions .action-item:hover {
+  color: #1890ff; /* Ant Design 的主题蓝 */
+}
