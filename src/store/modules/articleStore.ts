@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Article, Author, MyComment } from '../types'
-import { getArticleListAPI } from '../../utils/request';
+import { getArticleAPI } from '../../utils/request';
 interface ArticleState {
   article: Article | null;
   comments: MyComment[] | null;
@@ -9,12 +9,12 @@ const initialState: ArticleState = {
   article: null,
   comments: []
 }
-export const getArticleList = createAsyncThunk("article/getArticleList",
+export const getArticle = createAsyncThunk("article/getArticle",
   async (articleId: string, { rejectWithValue }) => {
     try {
-      const { articleList, commentList } = (await getArticleListAPI(articleId)).data;
+      const { article, commentList } = (await getArticleAPI(articleId)).data;
       return {
-        articleList: articleList,
+        article: article,
         commentList: commentList
       };
     }
@@ -69,13 +69,21 @@ const articleStore = createSlice({
       //undefined.ifBookMark undefined不能赋值 （TypeError: Cannot set properties of undefined）。
       //state.article?.detailInfo.ifBookMark = !state.article?.detailInfo.ifBookMark;
       state.article!.detailInfo.ifBookMark = !state.article?.detailInfo.ifBookMark;
-      if (state.article?.detailInfo)
-        state.article!.detailInfo.bookmarks += (state.article!.detailInfo.ifBookMark ? 1 : -1);
-
+      if (state.article!.detailInfo) {
+        state.article!.detailInfo.bookmarks! += (state.article!.detailInfo.ifBookMark ? 1 : -1);//可选可能为空
+      }
     }
 
   },
   extraReducers: (bulider) => {
-
+    bulider.addCase(getArticle.fulfilled, (state, action) => {
+      state.article = action.payload.article;
+      state.comments = action.payload.commentList;
+    })
+      .addCase(getArticle.rejected, (state, action) => {
+        console.log(action.error);
+      })
   },
 })
+export const { toggleLikes, addComment, addArticleMark } = articleStore.actions;
+export default articleStore.reducer;
