@@ -5,3 +5,12 @@ export const getImage = () => {
     url: '/getImage',
   })
 }
+export const getArticleListAPI = (articleId:string) => {
+  return http({
+    method: 'get',
+    url: '/getArticleList',
+    params: {
+      articleId:articleId
+    }
+  })
+}
