@@ -28,3 +28,9 @@ export const getAllArticleOverviewAPI = () => {
     url: '/articles'
   })
 }
+export const getAuthorRank = () => {
+  return http({
+    method: 'get',
+    url: '/authorsRank'
+  })
+}

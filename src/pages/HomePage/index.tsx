@@ -3,6 +3,8 @@ import { Layout, Row, Col, Card } from 'antd';
 // 假设您的 HomePage.css 在同一个目录下
 import './HomePage.css';
 import ArticleList from './components/ArticleList';
+import ImageCircle from './components/ImageCircle';
+import ArticleRankList from './components/ArticleRankList';
 
 const { Content } = Layout;
 
@@ -19,7 +21,7 @@ const HomePage: React.FC = () => {
               {/* 1. 轮播图横向 */}
               <Col span={24}>
                 <Card title="轮播图横向">
-                  {/* ... */}
+                  <ImageCircle />
                 </Card>
               </Col>
               {/* 2. 文章列表 */}
@@ -44,7 +46,7 @@ const HomePage: React.FC = () => {
               {/* 4. 排行榜 */}
               <Col span={24} style={{ flex: 1 }}> {/* 让排行榜卡片区域伸展 */}
                 <Card title="排行榜" style={{ height: '100%' }}>
-                  {/* ... */}
+                  <ArticleRankList />
                 </Card>
               </Col>
             </Row>

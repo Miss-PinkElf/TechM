@@ -29,7 +29,10 @@ export interface MyComment {
   detailInfo: DetailInfo;
   reply: MyComment[]
 }
-
+export interface AuthorRank extends Author {
+  popular: number;
+  followerNum: number;
+}
 interface ArticleState {
   article: Article | null;
   comments: MyComment[] | null;

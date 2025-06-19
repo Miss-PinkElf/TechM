@@ -16,3 +16,39 @@
       opacity: 1;
       cursor: pointer;
 }
+span.active{
+      background-color: blue;
+}
+
+.rank{
+  width: 40px;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center; /* 建议增加，让数字居中更好看 */
+  color:black; /* 默认颜色，用于4名及以后 */
+  margin-bottom: 17px;
+}
+
+/* 第一名样式 */
+.rank-0 {
+  font-size: 24px;
+  color:red; /* 沿用之前的醒目红色 */
+  /* 或者使用金色 */
+  /* color: #FFD700; */ 
+}
+
+/* 第二名样式 */
+.rank-1 {
+ font-size: 20px;
+  color: #fa8c16; /* 亮眼的橙色 */
+  /* 或者使用银色 */
+  /* color: #C0C0C0; */
+}
+
+/* 第三名样式 */
+.rank-2 {
+font-size: 18px;
+  color: #faad14; /* 之前用在流行值上的黄色，也适合第三名 */
+  /* 或者使用铜色 */
+  /* color: #CD7F32; */
+}

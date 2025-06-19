@@ -13,7 +13,21 @@ const IconText = ({ icon, text }: { icon: React.FC; text: string | number }) => 
   </Space>
 );
 
-const tabs = ['热门', '最新'];
+const tabs = ['热门|', '|最新'];
+const tabsOrder = new Map<number, (list: Article[]) => Article[]>([[0, (list) => {
+  // list.sort((a, b) => {
+  //   return a.detailInfo.likeNum - b.detailInfo.likeNum
+  // })只能通过set来改变state 使用[...list] 或者lodash
+  return [...list].sort((a, b) => {
+    return b.detailInfo.likeNum - a.detailInfo.likeNum
+  })
+
+}],
+[1, (list) => {
+  return [...list].sort((a, b) => {
+    return a.detailInfo.publicDate > b.detailInfo.publicDate ? -1 : 1
+  })
+}]])
 const ArticleList: React.FC = () => {
   const [nowTabindex, setTabIndex] = useState(0)
   const [articleList, setArticleList] = useState<Article[]>([])
@@ -21,11 +35,18 @@ const ArticleList: React.FC = () => {
   useEffect(() => {
     const getArticles = async () => {
       const res_articles: [] = (await getAllArticleOverviewAPI()).data;
-      setArticleList(res_articles);
+      setArticleList(res_articles)
     }
     getArticles();
     setLoading(false); // 请求结束后，取消 loading
+
   }, [])
+  const handleChangeTab = (key: number) => {
+    setTabIndex(key);
+    console.log('-----', [articleList]);
+    //应该做NPE
+    setArticleList(tabsOrder.get(key)!);
+  }
   return (
     <div>
       <div className="tab" >
@@ -34,6 +55,7 @@ const ArticleList: React.FC = () => {
             <span
               key={key}
               className={`${key === nowTabindex ? 'active' : ''}`}
+              onClick={() => { handleChangeTab(key) }}
             >
               {val}
             </span>
@@ -78,10 +100,6 @@ const ArticleList: React.FC = () => {
                       </Space>
                     }
                   />
-
-                  {/* 核心修正 #3: 将文章内容放在 Meta 之后，但在 Skeleton 之内
-            并为其添加一个 class，方便用 CSS 控制样式
-          */}
                   <div className="article-content">
                     {item.content}
                   </div>
