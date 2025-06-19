@@ -4,7 +4,7 @@ import { Avatar, Divider, List, Skeleton, Space, Typography } from "antd";
 import Icon, { LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Article } from "../../../store/types";
 import React from "react";
-
+import './index.css'
 //AI
 const IconText = ({ icon, text }: { icon: React.FC; text: string | number }) => (
   <Space>
@@ -44,6 +44,7 @@ const ArticleList: React.FC = () => {
         <List
           dataSource={articleList}
           rowKey='id'
+          itemLayout="vertical"
           renderItem={(item) => {
             return (
               <List.Item

@@ -16,27 +16,3 @@
       opacity: 1;
       cursor: pointer;
 }
-/* 修正文章标题可能出现的单词内换行问题 */
-.ant-list-item-meta-title {
-  word-break: break-word; /* 优先在单词间换行 */
-}
-
-/* 为文章内容摘要区域添加样式 */
-.article-content {
-  color: #555; /* 设置摘要文字颜色 */
-  margin-top: 12px; /* 与上方的 Meta 信息拉开一点距离 */
-  line-height: 1.6; /* 增加行高，提升可读性 */
-  /* 以下样式用于处理多行文本溢出，显示省略号 (可选) */
-  display: -webkit-box;
-  -webkit-line-clamp: 2; /* 最多显示 2 行 */
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-/* 优化图片样式，防止拉伸 */
-.ant-list-item-extra img {
-  width: 200px;
-  height: 120px;
-  object-fit: cover; /* 保证图片等比缩放，不变形 */
-  border-radius: 4px;
-}
