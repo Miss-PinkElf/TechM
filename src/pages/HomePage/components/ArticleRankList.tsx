@@ -113,7 +113,7 @@ const ArticleRankList: React.FC = () => {
   }, [])
   const handleChangeTab = (index: number) => {
     setActiveTab(index);
-    setCurrentDataSource([]);//防止数据跟不上 终端程序****
+    setCurrentDataSource([]);//防止数据跟不上 终端程序运行
     console.log('----current-----', index);
   }
   useEffect(() => {
@@ -161,7 +161,9 @@ const ArticleRankList: React.FC = () => {
         dataSource={currentDataSource}
         rowKey='id'
         itemLayout="vertical"
-        renderItem={renderListItem}
+        renderItem={(item, index) => {
+          return (tabRankOrderMap.get(activeTab)!({ item: item, index: index, orderKey: '' }))
+        }}
       />
     </div >
   )
