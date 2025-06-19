@@ -21,3 +21,10 @@ export const getCommentListAPI = (articleId: string) => {
     }
   })
 }
+
+export const getAllArticleOverviewAPI = () => {
+  return http({
+    method: 'get',
+    url: '/articles'
+  })
+}

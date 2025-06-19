@@ -79,7 +79,9 @@ const articleStore = createSlice({
       }
     },
     toggleArticleLikes: (state, action: PayloadAction<string>) => {
-      state.article!.detailInfo.ifLike = !state.article?.detailInfo.ifLike;
+      console.log('------articleLike', state.article?.detailInfo.ifLike);
+      state.article!.detailInfo.ifLike = !(state.article?.detailInfo.ifLike);
+      console.log('------articleLike', state.article?.detailInfo.ifLike);
       state.article!.detailInfo.likeNum! += (state.article!.detailInfo.likeNum ? 1 : -1);
     }
 

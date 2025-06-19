@@ -165,5 +165,26 @@
     { "url": "/image/3.png" },
     { "url": "/image/4.png" },
     { "url": "/image/5.png"}
+  ],
+  "getAllArticle":[
+      {
+      "id": "23",
+      "type": "article",
+      "articleId": null,
+      "title": "深入 React Hooks：useEffect 的常见陷阱",
+      "content": "useEffect 是 React 中最强大的 Hook 之一，但也是最容易被误用的。本文将深入探讨 useEffect 的一些常见陷阱，例如无限循环、错误的依赖项数组以及如何处理数据获取...",
+      "author": {
+        "id": "user-101",
+        "name": "React 大师",
+        "avatarUrl": "https://i.pravatar.cc/150?u=user-101"
+      },
+      "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
+      "detailInfo": {
+        "ifLike": true,
+        "likeNum": 512,
+        "commentNum": 2,
+        "publicDate": "2025-06-19T10:00:00Z"
+      }
+    }
   ]
 }

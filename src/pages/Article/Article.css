@@ -1,0 +1,39 @@
+/* 页面整体布局容器 */
+.article-page-container {
+  max-width: 900px;
+  margin: 32px auto; /* 上下边距32px，左右自动居中 */
+  padding: 0 16px; /* 在小屏幕上提供一些边距 */
+}
+
+/* 页面初次加载时的居中Spinner */
+.page-loading-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 80vh; /* 占据大部分视口高度 */
+}
+
+/* 文章头部 */
+.article-header {
+  text-align: left;
+}
+
+/* 文章内容区域的样式 */
+.article-content {
+  font-size: 16px;
+  line-height: 1.8;
+}
+
+/* 确保文章内容中的图片自适应宽度 */
+.article-content img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 8px; /* 给图片加个圆角 */
+  margin: 16px 0;
+}
+
+/* 文章操作按钮区域 */
+.article-actions {
+  margin-top: 16px;
+  margin-bottom: 16px;
+}

@@ -1,0 +1,13 @@
+.homepage-content {
+  margin: 0 auto; /* 居中显示 */
+}
+
+/* 占位符卡片的样式，方便您看到布局效果 */
+.placeholder-card .ant-card-body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  color: #cccccc;
+  font-size: 1.2rem;
+}
