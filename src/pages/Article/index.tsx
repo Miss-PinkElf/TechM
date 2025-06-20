@@ -49,11 +49,30 @@ const Article: React.FC = () => {
       name: "error",
       avatarUrl: '111'
     }
-    dispatch(addCommentLocal({ author: author, content: currentComment }));
-    //dispatch(addComment({ author: author, content: currentComment, articleId: article!.id }))
+    //dispatch(addCommentLocal({ author: author, content: currentComment }));
+    // dispatch(addComment({ author: author, content: currentComment, articleId: article!.id }))
+    //setCurrentComment('');
+    try {
+      // dispatch 返回一个 promise, 我们 await 它并调用 unwrap()
+      // unwrap() 会在 thunk 成功时返回 action.payload 的值
+      // 如果 thunk 失败，它会抛出错误，然后被 catch 块捕获
+      await dispatch(addComment({
+        author: author,
+        content: currentComment,
+        articleId: article!.id
+      })).unwrap();
 
-    setCurrentComment('');
+      // 只有在 dispatch 成功后，才清空输入框
+      setCurrentComment('');
+
+
+    } catch (error: any) {
+      // 如果 dispatch 失败，错误会在这里被捕获
+      console.error("发布评论失败:", error);
+      // 给用户一个友好的提示
+    }
   }
+
   // 在 article 数据加载完成前，显示加载动画
   // 这是一个在不修改 Redux State 的前提下处理加载状态的简单有效方法
   // Ai
@@ -67,7 +86,7 @@ const Article: React.FC = () => {
 
   return (
     <div className="article-page-container">
-      <Card bordered={false}>
+      <Card variant="borderless">
         {/* 文章头部 */}
         <header className="article-header">
           <Title style={{ marginBottom: 24 }}>{article.title}</Title>
@@ -107,7 +126,6 @@ const Article: React.FC = () => {
         </Space>
       </Card>
 
-      {/* 评论区 */}
       <Card variant="borderless" title={<Title level={3}>评论区</Title>} style={{ marginTop: 24 }}>
         <div className="comment-publish" style={{ display: 'flex' }}>
           <div style={{}}>

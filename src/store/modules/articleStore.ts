@@ -1,8 +1,6 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Article, Author, MyComment } from '../types'
 import { addCommentAPI, getArticleAPI, getCommentListAPI } from '../../utils/request';
-import { stat } from 'fs';
-import { act } from 'react';
 interface ArticleState {
   article: Article | null;
   comments: MyComment[];
@@ -116,10 +114,13 @@ const articleStore = createSlice({
       }
     },
     toggleArticleLikes: (state, action: PayloadAction<string>) => {
-      console.log('------articleLike', state.article?.detailInfo.ifLike);
-      state.article!.detailInfo.ifLike = !(state.article?.detailInfo.ifLike);
-      console.log('------articleLike', state.article?.detailInfo.ifLike);
-      state.article!.detailInfo.likeNum! += (state.article!.detailInfo.likeNum ? 1 : -1);
+      if (state.article && state.article.detailInfo) {
+        const detailInfo = state.article.detailInfo;
+        // 1. 先切换点赞状态
+        detailInfo.ifLike = !detailInfo.ifLike;
+        // 2. 根据新的点赞状态来更新点赞数
+        detailInfo.likeNum += detailInfo.ifLike ? 1 : -1;
+      }
     }
 
 
