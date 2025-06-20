@@ -1,10 +1,11 @@
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit';
 import { Article, Author, MyComment } from '../types'
-import { getArticleAPI, getCommentListAPI } from '../../utils/request';
+import { addCommentAPI, getArticleAPI, getCommentListAPI } from '../../utils/request';
 import { stat } from 'fs';
+import { act } from 'react';
 interface ArticleState {
   article: Article | null;
-  comments: MyComment[] | null;
+  comments: MyComment[];
 }
 const initialState: ArticleState = {
   article: null,
@@ -22,6 +23,39 @@ export const getArticle = createAsyncThunk("article/getArticle",
     }
     catch (e: any) {
       return rejectWithValue(e.response?.data?.message || '加载失败');
+    }
+  }
+)
+export const addComment = createAsyncThunk('comments/addComment',
+  async (commentInfo: { author: Author, content: string, articleId: string }, { rejectWithValue }) => {
+    try {
+      const newComment: MyComment = {
+        id: `${Date.now()}`, // 调用 Date.now() 获取当前时间戳
+        articleId: commentInfo.articleId,
+        content: commentInfo.content,
+        author: commentInfo.author,
+        detailInfo: {
+          ifLike: false,
+          likeNum: 0,
+          commentNum: 0,
+          // 修正: 调用 Date.now() 来获取当前时间的毫秒数
+          publicDate: `${Date.now()}`
+        },
+        reply: []
+      };
+
+      // 假设 addCommentAPI 是一个异步函数，它可能会失败
+      const response = await addCommentAPI(newComment);
+
+      // 通常API成功后会返回创建的数据，我们最好使用API返回的数据
+      // 这里我们为了简单，还是返回我们前端创建的对象
+      return newComment;
+
+    } catch (error: any) {
+      // 如果 API 调用失败，错误会被捕获
+      console.error("添加评论失败:", error);
+      // 使用 rejectWithValue 将标准化的错误信息传递给 rejected reducer
+      return rejectWithValue(error.response?.data || '添加评论时发生未知错误');
     }
   }
 )
@@ -54,9 +88,10 @@ const articleStore = createSlice({
         nowComment.detailInfo.likeNum += (nowComment.detailInfo.ifLike ? 1 : -1)
       }
     },
-    addComment: (state, action: PayloadAction<{ author: Author, content: string }>) => {
+    addCommentLocal: (state, action: PayloadAction<{ author: Author, content: string }>) => {
+
       const newComment: MyComment = {
-        id: `${Date.now()}`,
+        id: `${Date.now()}`, // 调用 Date.now() 获取当前时间戳
         articleId: state.article!.id,
         content: action.payload.content,
         author: action.payload.author,
@@ -64,11 +99,13 @@ const articleStore = createSlice({
           ifLike: false,
           likeNum: 0,
           commentNum: 0,
-          publicDate: `${Date.now}`
+          // 修正: 调用 Date.now() 来获取当前时间的毫秒数
+          publicDate: `${Date.now()}`
         },
         reply: []
-      }
-      state.comments?.push(newComment);
+      };
+      state.comments.push(newComment);
+
     },
     toggleArticleMark: (state, action: PayloadAction<string>) => {
       //undefined.ifBookMark undefined不能赋值 （TypeError: Cannot set properties of undefined）。
@@ -95,7 +132,15 @@ const articleStore = createSlice({
       .addCase(getArticle.rejected, (state, action) => {
         console.log(action.error);
       })
+    bulider.addCase(addComment.fulfilled, (state, action) => {
+      state.comments.push(action.payload)
+    })
+      .addCase(addComment.rejected, (state, action) => {
+        console.error('发布');
+
+      })
+
   },
 })
-export const { toggleLikesComment, addComment, toggleArticleMark, toggleArticleLikes } = articleStore.actions;
+export const { toggleLikesComment, toggleArticleMark, toggleArticleLikes, addCommentLocal } = articleStore.actions;
 export default articleStore.reducer;

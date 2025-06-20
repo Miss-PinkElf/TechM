@@ -113,7 +113,7 @@ const ArticleRankList: React.FC = () => {
   }, [])
   const handleChangeTab = (index: number) => {
     setActiveTab(index);
-    setCurrentDataSource([]);//防止数据跟不上 终端程序运行
+    setCurrentDataSource([]);//防止数据跟不上 终端程序运行*********太秒了
     console.log('----current-----', index);
   }
   useEffect(() => {

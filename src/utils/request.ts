@@ -1,3 +1,4 @@
+import { MyComment } from "../store/types";
 import http from "./http";
 export const getImage = () => {
   return http({
@@ -32,5 +33,13 @@ export const getAuthorRank = () => {
   return http({
     method: 'get',
     url: '/authorsRank'
+  })
+}
+
+export const addCommentAPI = (comment: MyComment) => {
+  return http({
+    method: 'post',
+    url: 'comments',
+    data: comment
   })
 }

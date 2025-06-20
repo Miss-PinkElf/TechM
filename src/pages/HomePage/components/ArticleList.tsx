@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { getAllArticleOverviewAPI } from "../../../utils/request";
-import { Avatar, Divider, List, Skeleton, Space, Typography } from "antd";
+import { Avatar, Divider, List, Popover, Skeleton, Space, Typography } from "antd";
 import Icon, { LikeOutlined, MessageOutlined } from "@ant-design/icons";
 import { Article } from "../../../store/types";
 import React from "react";
@@ -82,16 +82,18 @@ const ArticleList: React.FC = () => {
                   />
                 }
               >
-                {/* 核心修正 #1: Skeleton 组件应该包裹所有在加载时需要显示骨架的内容 
-        */}
+
                 <Skeleton loading={loading} avatar active>
 
                   <List.Item.Meta
                     avatar={<Avatar src={item.author.avatarUrl} />}
-                    title={<a href={`/article/${item.id}`}>{item.title}</a>}
+                    title={<Popover content={item.title}>
+                      <a href={`/article/${item.id}`}>{item.title.length < 25 ? item.title : `${item.title.substring(0, 20)}...`
+                      }</a>
+                    </Popover>
+                    }
                     description={
-                      /* 核心修正 #2: 使用 Space 组件来保证 description 内元素水平排列 
-                      */
+
                       <Space size={8} split={<Divider type="vertical" />}>
                         <Typography.Text>{item.author.name}</Typography.Text>
                         <Typography.Text type="secondary">
