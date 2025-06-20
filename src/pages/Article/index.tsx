@@ -4,7 +4,7 @@ import { useParams } from "react-router-dom";
 import { addComment, addCommentLocal, getArticle, toggleArticleLikes, toggleArticleMark, toggleLikesComment } from "../../store/modules/articleStore";
 
 // 引入 Ant Design 组件和图标
-import { Spin, Card, Typography, Avatar, Button, Divider, List, Space, Empty, Input } from 'antd';
+import { Spin, Card, Typography, Avatar, Button, Divider, List, Space, Empty, Input, message } from 'antd';
 import { LikeOutlined, LikeFilled, StarOutlined, StarFilled } from '@ant-design/icons';
 
 import './Article.css'; // 引入自定义样式
@@ -42,7 +42,19 @@ const Article: React.FC = () => {
   const handleToggleLikeComment = (commentId: string) => {
     dispatch(toggleLikesComment(commentId));
   };
-  const handlePublishComment = async () => {
+  const handlePublishComment = async (e: React.MouseEvent<HTMLElement>) => {
+
+    if (!article) {
+      message.error('文章数据异常，请刷新页面后再试！');
+      return;
+    }
+
+    // 2. 恢复你原有的逻辑
+    if (!currentComment.trim()) {
+      message.warning('评论内容不能为空！');
+      return;
+    }
+
 
     const author: Author = {
       id: '1',
@@ -59,7 +71,7 @@ const Article: React.FC = () => {
       await dispatch(addComment({
         author: author,
         content: currentComment,
-        articleId: article!.id
+        articleId: article.id
       })).unwrap();
 
       // 只有在 dispatch 成功后，才清空输入框
@@ -72,6 +84,27 @@ const Article: React.FC = () => {
       // 给用户一个友好的提示
     }
   }
+  // const handlePublishComment = (e: React.MouseEvent<HTMLElement>) => {
+  //   // 1. 明确地阻止事件的默认行为
+  //   e.preventDefault();
+
+  //   // 2. 打印一条消息到控制台，确认函数被触发且没有刷新
+  //   console.log('按钮已点击，页面不应该刷新！');
+
+  //   // 暂时注释掉所有的异步逻辑
+  //   /*
+  //   if (!currentComment.trim()) {
+  //     message.warning('评论内容不能为空！');
+  //     return;
+  //   }
+
+  //   if (isPublishing) {
+  //     return;
+  //   }
+
+  //   // ... 后续所有 dispatch 和 try/catch/finally 逻辑都先注释掉
+  //   */
+  // };
 
   // 在 article 数据加载完成前，显示加载动画
   // 这是一个在不修改 Redux State 的前提下处理加载状态的简单有效方法
@@ -94,7 +127,7 @@ const Article: React.FC = () => {
             <Avatar size={48} src={article.author.avatarUrl} />
             <div style={{ display: 'flex', flexDirection: 'column' }}>
               <Text strong>{article.author.name}</Text>
-              <Text type="secondary">{new Date(article.detailInfo.publicDate).toLocaleString()}</Text>
+              <Text type="secondary">{new Date(parseInt(article.detailInfo.publicDate)).toLocaleString()}</Text>
             </div>
           </Space>
         </header>
@@ -142,7 +175,7 @@ const Article: React.FC = () => {
             />
 
             <div style={{ alignSelf: 'flex-end', marginTop: '7px' }}>
-              <Button type="primary" onClick={handlePublishComment} >
+              <Button type="primary" onClick={handlePublishComment} htmlType="button">
                 发布评论
               </Button>
             </div>
@@ -171,6 +204,7 @@ const Article: React.FC = () => {
                 title={<Text strong>{item.author.name}</Text>}
                 description={item.content}
               />
+              <Text type="secondary">{new Date(parseInt(item.detailInfo.publicDate)).toLocaleString()}</Text>
             </List.Item>
           )}
         />
