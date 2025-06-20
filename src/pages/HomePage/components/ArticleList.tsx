@@ -97,7 +97,7 @@ const ArticleList: React.FC = () => {
                       <Space size={8} split={<Divider type="vertical" />}>
                         <Typography.Text>{item.author.name}</Typography.Text>
                         <Typography.Text type="secondary">
-                          {new Date(item.detailInfo.publicDate).toLocaleDateString()}
+                          {new Date(parseInt(item.detailInfo.publicDate)).toLocaleString()}
                         </Typography.Text>
                       </Space>
                     }

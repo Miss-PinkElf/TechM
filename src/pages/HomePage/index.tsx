@@ -5,6 +5,7 @@ import './HomePage.css';
 import ArticleList from './components/ArticleList';
 import ImageCircle from './components/ImageCircle';
 import ArticleRankList from './components/ArticleRankList';
+import RightImageList from './components/RightImageList';
 
 const { Content } = Layout;
 
@@ -21,7 +22,7 @@ const HomePage: React.FC = () => {
               {/* 1. 轮播图横向 */}
               <Col span={24}>
                 <Card title="轮播图横向">
-                  <ImageCircle />
+                  <ImageCircle></ImageCircle>
                 </Card>
               </Col>
               {/* 2. 文章列表 */}
@@ -40,7 +41,7 @@ const HomePage: React.FC = () => {
               {/* 3. 轮播图竖向 */}
               <Col span={24}>
                 <Card title="轮播图竖向">
-                  {/* ... */}
+                  <RightImageList />
                 </Card>
               </Col>
               {/* 4. 排行榜 */}

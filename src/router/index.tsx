@@ -9,6 +9,7 @@ import HomePage from "../pages//HomePage";
 import Article from "../pages/Article";
 // 404页面
 import NotFoundPage from "../components/404";
+import Qa from "../pages/QA";
 
 const routes: RouteObject[] = [
   {
@@ -23,6 +24,10 @@ const routes: RouteObject[] = [
         path: "/article/:articleId",
         element: <Article />,
       },
+      {
+        path: '/qa',
+        element: <Qa />
+      }
     ],
   },
   {

@@ -42,48 +42,105 @@ const Article: React.FC = () => {
   const handleToggleLikeComment = (commentId: string) => {
     dispatch(toggleLikesComment(commentId));
   };
-  const handlePublishComment = async (e: React.MouseEvent<HTMLElement>) => {
+  // const handlePublishComment = (e: React.MouseEvent<HTMLElement>) => {
 
+  //   if (!article) {
+  //     message.error('文章数据异常，请刷新页面后再试！');
+  //     return;
+  //   }
+
+  //   // 2. 恢复你原有的逻辑
+  //   if (!currentComment.trim()) {
+  //     message.warning('评论内容不能为空！');
+  //     return;
+  //   }
+  //   const author: Author = {
+  //     id: '1',
+  //     name: "error",
+  //     avatarUrl: '111'
+  //   }
+  //   dispatch(addCommentLocal({ author: author, content: currentComment }));
+  //   const newComment: MyComment = {
+  //     id: `${Date.now()}`, // 调用 Date.now() 获取当前时间戳
+  //     articleId: article.id,
+  //     content: currentComment,
+  //     author: author,
+  //     detailInfo: {
+  //       ifLike: false,
+  //       likeNum: 0,
+  //       commentNum: 0,
+  //       // 修正: 调用 Date.now() 来获取当前时间的毫秒数
+  //       publicDate: `${Date.now()}`
+  //     },
+  //     reply: []
+  //   };
+  //   addCommentAPI(newComment);
+  //   // dispatch(addComment({ author: author, content: currentComment, articleId: article!.id }))
+  //   setCurrentComment('');
+  //   message.success('发布成功')
+  //   // try {
+  //   //   // dispatch 返回一个 promise, 我们 await 它并调用 unwrap()
+  //   //   // unwrap() 会在 thunk 成功时返回 action.payload 的值
+  //   //   // 如果 thunk 失败，它会抛出错误，然后被 catch 块捕获
+  //   //   await dispatch(addComment({
+  //   //     author: author,
+  //   //     content: currentComment,
+  //   //     articleId: article.id
+  //   //   })).unwrap();
+
+  //   //   // 只有在 dispatch 成功后，才清空输入框
+  //   //   setCurrentComment('');
+
+
+  //   // } catch (error: any) {
+  //   //   // 如果 dispatch 失败，错误会在这里被捕获
+  //   //   console.error("发布评论失败:", error);
+  //   //   // 给用户一个友好的提示
+  //   // }
+  // }
+
+  const handlePublishComment = async () => {
+    // 安全检查：防止文章数据不存在
     if (!article) {
       message.error('文章数据异常，请刷新页面后再试！');
       return;
     }
 
-    // 2. 恢复你原有的逻辑
+    // 安全检查：防止评论为空
     if (!currentComment.trim()) {
       message.warning('评论内容不能为空！');
       return;
     }
 
 
+    // 模拟当前用户
     const author: Author = {
-      id: '1',
-      name: "error",
-      avatarUrl: '111'
-    }
-    //dispatch(addCommentLocal({ author: author, content: currentComment }));
-    // dispatch(addComment({ author: author, content: currentComment, articleId: article!.id }))
-    //setCurrentComment('');
+      id: 'user-guest',
+      name: "访客",
+      avatarUrl: `https://i.pravatar.cc/150?u=user-guest`
+    };
+
     try {
-      // dispatch 返回一个 promise, 我们 await 它并调用 unwrap()
-      // unwrap() 会在 thunk 成功时返回 action.payload 的值
-      // 如果 thunk 失败，它会抛出错误，然后被 catch 块捕获
+      // 使用 createAsyncThunk 的方式，这是最稳妥的
       await dispatch(addComment({
         author: author,
         content: currentComment,
-        articleId: article.id
+        articleId: article.id, // 安全地使用
       })).unwrap();
 
-      // 只有在 dispatch 成功后，才清空输入框
+      // 成功后的操作
       setCurrentComment('');
-
+      message.success('评论发布成功！');
 
     } catch (error: any) {
-      // 如果 dispatch 失败，错误会在这里被捕获
+      // 失败后的操作（由 thunk 的 rejectWithValue 或 unwrap 触发）
       console.error("发布评论失败:", error);
-      // 给用户一个友好的提示
+      message.error(error.message || '发布评论失败，请稍后再试。');
+    } finally {
+      // 最终都结束 loading 状态
+
     }
-  }
+  };
   // const handlePublishComment = (e: React.MouseEvent<HTMLElement>) => {
   //   // 1. 明确地阻止事件的默认行为
   //   e.preventDefault();

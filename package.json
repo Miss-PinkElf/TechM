@@ -17,6 +17,7 @@
     "json-server": "^1.0.0-beta.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "react-infinite-scroll-component": "^6.1.0",
     "react-redux": "^9.2.0",
     "react-router-dom": "^6.23.1",
     "react-scripts": "5.0.1",
@@ -28,7 +29,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "json-serve": "json-server public/db.json --port 3004"
+    "json-serve": "json-server --watch public/db.json --port 3004"
   },
   "eslintConfig": {
     "extends": [

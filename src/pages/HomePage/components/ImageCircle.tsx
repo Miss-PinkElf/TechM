@@ -1,10 +1,10 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./index.css"
 import { getImage } from "../../../utils/request";
-import { log } from "console";
+import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 const bcgStyle: React.CSSProperties = {
-  height: "300px",
-  width: '400px',
+  height: '300px',
+  width: '100% ',
   backgroundColor: 'white',
   bottom: '0px',
   overflow: 'hidden'
@@ -35,7 +35,7 @@ const toggleStyle: React.CSSProperties = {
   gap: '5px'
 };
 
-type Image = {
+export type Image = {
   url: string;
 }
 function useGetImageList() {
@@ -93,9 +93,17 @@ const ImageCircle: React.FC = () => {
     setImageIndex(prev => (prev + 1) % imageList.length)
     beginImage();
   }
+  const handleMouseEnterBcg = () => {
+    stopImage();
+  }
+  const handleMouseLeaveBcg = () => {
+    beginImage();
+  }
   return (
-    <div style={{ height: '550px', width: "400px" }}>
-      <div className="bcg" style={bcgStyle}>
+    <div style={{ width: '100%' }}>
+      <div className="bcg" style={bcgStyle} onMouseEnter={handleMouseEnterBcg}
+        onMouseLeave={handleMouseLeaveBcg}
+      >
         <img src={imageList[imageIndex]?.url} alt="" style={{ height: "100%", }} />
       </div>
       <div className="footer" style={footerStyle}>
@@ -108,8 +116,8 @@ const ImageCircle: React.FC = () => {
         </ul>
 
         <div className="toggle" style={toggleStyle}>
-          <button className="prev" onClick={handlePrev}> &lt; </button>
-          <button className="next" onClick={handleNext}> &gt; </button>
+          <LeftOutlined className="prev" onClick={handlePrev} />
+          <RightOutlined className="next" onClick={handleNext} />
         </div>
       </div>
 

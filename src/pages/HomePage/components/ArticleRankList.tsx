@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react"
 import { Article, AuthorRank } from "../../../store/types";
-import { Avatar, List, Typography } from "antd";
+import { Avatar, Divider, List, Skeleton, Typography } from "antd";
 import { getAllArticleOverviewAPI, getAuthorRank } from "../../../utils/request";
 import './index.css'
-const tabsRank = ['博主榜', 'CommentRank', '收藏榜']
+import InfiniteScroll from "react-infinite-scroll-component";
+const tabsRank = ['博主榜', '评价榜', '收藏榜']
 type renderProp = { item: any, index: number, orderKey: string }
 
 const getRankClassName = (index: number): string => {
@@ -81,6 +82,7 @@ const ArticleRankList: React.FC = () => {
   const [articleList, setArticleList] = useState<Article[]>([]);
   const [authorList, setAuthorList] = useState<AuthorRank[]>([])
   const [activeTab, setActiveTab] = useState(0);
+  const [loading, setLoading] = useState(false);
   const [currentDataSource, setCurrentDataSource] = useState<(Article | AuthorRank)[]>([]);
 
   const getArticleRankByCommentList = async (): Promise<Article[]> => {
@@ -157,14 +159,26 @@ const ArticleRankList: React.FC = () => {
           </span>
         ))}
       </div>
-      <List
-        dataSource={currentDataSource}
-        rowKey='id'
-        itemLayout="vertical"
-        renderItem={(item, index) => {
-          return (tabRankOrderMap.get(activeTab)!({ item: item, index: index, orderKey: '' }))
+      <InfiniteScroll
+        dataLength={currentDataSource.length}
+        hasMore={currentDataSource.length > 30}//
+        next={() => {
+
         }}
-      />
+        loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
+        height={500}
+        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+      >
+        <List
+          dataSource={currentDataSource}
+          rowKey='id'
+          itemLayout="vertical"
+          renderItem={(item, index) => {
+            return (tabRankOrderMap.get(activeTab)!({ item: item, index: index, orderKey: '' }))
+          }}
+        />
+      </InfiniteScroll>
+
     </div >
   )
 }
