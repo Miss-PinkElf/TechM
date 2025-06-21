@@ -2,6 +2,8 @@ import React, { useEffect, useRef, useState } from "react";
 import "./index.css"
 import { getImage } from "../../../utils/request";
 import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
+import { Popover } from "antd";
 const bcgStyle: React.CSSProperties = {
   height: '300px',
   width: '100% ',
@@ -36,7 +38,9 @@ const toggleStyle: React.CSSProperties = {
 };
 
 export type Image = {
+  id: number;
   url: string;
+  alt: string;
 }
 function useGetImageList() {
   const [imageList, setImageList] = useState<Image[]>([]);//否则会错误
@@ -104,7 +108,17 @@ const ImageCircle: React.FC = () => {
       <div className="bcg" style={bcgStyle} onMouseEnter={handleMouseEnterBcg}
         onMouseLeave={handleMouseLeaveBcg}
       >
-        <img src={imageList[imageIndex]?.url} alt="" style={{ height: "100%", }} />
+        <Popover
+          content={imageList[imageIndex]?.id}
+        >
+          <Link
+            to={`/article/${imageList[imageIndex]?.id}`}
+          >
+            <img src={imageList[imageIndex]?.url} alt="" style={{ height: "100%", }} />
+          </Link>
+        </Popover>
+
+
       </div>
       <div className="footer" style={footerStyle}>
         <ul style={{ display: 'flex' }}>

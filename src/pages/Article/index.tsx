@@ -136,7 +136,6 @@ const Article: React.FC = () => {
       console.error("发布评论失败:", error);
       message.error(error.message || '发布评论失败，请稍后再试。');
     } finally {
-   
 
     }
   };
@@ -172,12 +171,17 @@ const Article: React.FC = () => {
       </div>
     );
   }
-
+  const author: Author = {
+    id: 'user-guest',
+    name: "访客",
+    avatarUrl: `https://i.pravatar.cc/150?u=user-guest`
+  };
   return (
     <div className="article-page-container">
       <Card variant="borderless">
         {/* 文章头部 */}
         <header className="article-header">
+
           <Title style={{ marginBottom: 24 }}>{article.title}</Title>
           <Space align="center" size="middle">
             <Avatar size={48} src={article.author.avatarUrl} />
@@ -210,7 +214,7 @@ const Article: React.FC = () => {
             icon={article.detailInfo.ifBookMark ? <StarFilled /> : <StarOutlined />}
             onClick={handleToggleArticleMark}
           >
-            收藏
+            收藏数 {article.detailInfo.bookmarks}
           </Button>
         </Space>
       </Card>
@@ -218,8 +222,8 @@ const Article: React.FC = () => {
       <Card variant="borderless" title={<Title level={3}>评论区</Title>} style={{ marginTop: 24 }}>
         <div className="comment-publish" style={{ display: 'flex' }}>
           <div style={{}}>
-            <Avatar size={"large"} style={{ marginTop: '18px', marginLeft: '0px' }}></Avatar><br></br>
-            <span>UserName</span>
+            <Avatar size={"large"} style={{ marginTop: '18px', marginLeft: '0px' }} src={author.avatarUrl}></Avatar><br></br>
+            <span>{author.name}</span>
           </div>
 
           <div style={{ flex: 0.9, marginLeft: '10px', display: 'flex', flexDirection: "column" }}>

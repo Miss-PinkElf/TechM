@@ -1,7 +1,7 @@
 const Qa: React.FC = () => {
   return (
     <div>
-      QA
+      <h1>QA</h1>
     </div>
   )
 }

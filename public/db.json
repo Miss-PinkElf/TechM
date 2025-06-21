@@ -13,6 +13,7 @@
       },
       "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
       "detailInfo": {
+        "bookmarks":1,
         "ifLike": true,
         "likeNum": 512,
         "commentNum": 2,
@@ -34,6 +35,7 @@
       "imageUrl": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
       "detailInfo": {
         "ifLike": false,
+        "bookmarks":1,
         "likeNum": 1024,
         "commentNum": 1,
         "publicDate": "1659405179809"
@@ -114,23 +116,28 @@
   "getImage": [
     {
       "url": "/image/1.png",
-      "id": "49cd"
+      "id": "49cd",
+      "alt":""
     },
     {
       "url": "/image/2.png",
-      "id": "5115"
+      "id": "5115",
+      "alt":""
     },
     {
       "url": "/image/3.png",
-      "id": "406d"
+      "id": "406d",
+        "alt":""
     },
     {
       "url": "/image/4.png",
-      "id": "2bba"
+      "id": "2bba",
+      "alt":""
     },
     {
       "url": "/image/5.png",
-      "id": "ea34"
+      "id": "ea34",
+      "alt":""
     }
   ],
   "getAllArticle": [

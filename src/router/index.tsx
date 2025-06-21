@@ -10,6 +10,8 @@ import Article from "../pages/Article";
 // 404页面
 import NotFoundPage from "../components/404";
 import Qa from "../pages/QA";
+import Courses from "../pages/Courses";
+import FineArticle from "../pages/FineArticle";
 
 const routes: RouteObject[] = [
   {
@@ -27,7 +29,16 @@ const routes: RouteObject[] = [
       {
         path: '/qa',
         element: <Qa />
-      }
+      },
+      {
+        path: '/courses',
+        element: <Courses />
+      },
+      {
+        path: '/fine_articles',
+        element: <FineArticle />
+      },
+
     ],
   },
   {
