@@ -127,7 +127,6 @@ const Article: React.FC = () => {
         content: currentComment,
         articleId: article.id, // 安全地使用
       })).unwrap();
-
       // 成功后的操作
       setCurrentComment('');
       message.success('评论发布成功！');
@@ -137,7 +136,7 @@ const Article: React.FC = () => {
       console.error("发布评论失败:", error);
       message.error(error.message || '发布评论失败，请稍后再试。');
     } finally {
-      // 最终都结束 loading 状态
+   
 
     }
   };
