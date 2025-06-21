@@ -7,7 +7,7 @@ import { addComment, addCommentLocal, getArticle, toggleArticleLikes, toggleArti
 import { Spin, Card, Typography, Avatar, Button, Divider, List, Space, Empty, Input, message } from 'antd';
 import { LikeOutlined, LikeFilled, StarOutlined, StarFilled } from '@ant-design/icons';
 
-import './Article.css'; // 引入自定义样式
+import './index.css'; // 引入自定义样式
 import { Author, MyComment } from "../../store/types";
 import { addCommentAPI } from "../../utils/request";
 
@@ -242,7 +242,7 @@ const Article: React.FC = () => {
         </div>
         <List
           dataSource={comments!}
-          locale={{ emptyText: <Empty description="暂无评论，快来抢沙发吧！" /> }}
+          locale={{ emptyText: <Empty description="暂无评论" /> }}
           renderItem={item => (
             <List.Item
               actions={[

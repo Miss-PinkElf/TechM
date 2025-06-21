@@ -1,5 +1,7 @@
 # Getting Started with Create React App
 
+请创建一个项目文档，并在此文档中描述项目开发过程和系统说明。
+例如：完成 xx 模块，xx 模块如何设计，使用 xx 技术，找到 xx 问题，项目汇总等。
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
 ## Available Scripts
