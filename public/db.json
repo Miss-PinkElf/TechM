@@ -5,11 +5,11 @@
       "type": "article",
       "articleId": null,
       "title": "React 状态管理的未来：Zustand vs. Redux",
-      "content": "在现代 React 开发中，状态管理库的选择至关重要。本文深入比较了轻量级的 Zustand 和老牌的 Redux Toolkit...",
+      "content": "在现代前端开发，特别是复杂的 React 应用中，一个高效、可预测的状态管理方案是项目成功的基石。长久以来，Redux 以其严格的单向数据流、可预测的状态变更和强大的中间件生态，稳坐状态管理方案的头把交椅。通过引入 Redux Toolkit (RTK)，官方已经极大地简化了 Redux 的模板代码，优化了使用体验。然而，其相对陡峭的学习曲线和较为繁琐的配置流程，仍然让一些开发者望而却步。\n\n在这种背景下，以 Zustand 为代表的新一代轻量级状态管理库应运而生。Zustand 拥抱 React Hooks，提供了极其简洁的 API。开发者不再需要编写 Actions、Reducers，也无需用 Provider 包裹整个应用。仅仅通过一个 create 函数就能创建一个共享状态的 store，并在组件中使用简单的 Hook 来读取和更新状态。\n\n**核心对比：**\n\n* **简洁性与模板代码**：Zustand 在此方面优势明显，仅需几行代码即可完成状态的创建和使用。Redux Toolkit 虽已大幅简化，但仍需定义 Slice、配置 Store 等步骤。\n* **API 设计哲学**：Zustand 遵循“非侵入式”原则，其 API 更接近 React 内置的 useState，学习成本极低。Redux 则更强调“事件溯源”，通过派发 (dispatch) 显式的动作 (action) 来追踪每一次状态变更，这在大型复杂项目中更易于调试和维护。\n* **性能优化**：Zustand 默认提供基于选择器 (selector) 的性能优化。组件只会订阅其关心的状态片段，只有当该片段变化时才会触发重渲染。在 Redux 中，虽然 useSelector 也支持类似功能，但需要开发者更主动地进行性能管理。\n* **生态与开发者工具**：Redux 拥有一个无比成熟和庞大的生态系统，以及功能强大的 Redux DevTools，可以实现时间旅行调试等高级功能。Zustand 虽然年轻，但也可以与 Redux DevTools 集成，生态也在快速发展。\n\n**结论**：Zustand 与 Redux 并非是你死我活的替代关系，而是针对不同场景的优秀解决方案。对于中小型项目、追求极致开发效率或从 Hooks 过渡的开发者而言，Zustand 无疑是极具吸引力的选择。而对于需要严格数据流规范、复杂状态逻辑和强大调试能力的大型企业级应用，经过 Redux Toolkit 优化的 Redux 依然是那个最稳健、最可靠的王者。",
       "author": {
         "id": "author-001",
         "name": "陳怡君",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-001"
+        "avatarUrl": "https://cravatar.cn/avatar/d41d8cd98f00b204e9800998ecf8427e?s=150&d=mp"
       },
       "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
       "detailInfo": {
@@ -27,11 +27,11 @@
       "type": "article",
       "articleId": null,
       "title": "Java 21 虚拟线程：性能革命还是营销噱头？",
-      "content": "虚拟线程是 Java 21 的一大亮点，它承诺以更低的资源消耗处理海量并发请求。本文将通过基准测试来验证...",
+      "content": "自 Java 诞生以来，其线程模型一直与操作系统（OS）线程进行一对一的映射。这意味着每个 Java 线程都对应一个昂贵的内核级线程，其创建和上下文切换成本高昂，直接限制了应用能够处理的并发任务数量。这使得在高并发、I/O 密集型场景下，Java 开发者不得不转向复杂的异步编程模型，如回调、Futures 或响应式编程框架，以提高系统吞吐量。\n\nJava 21 带来的虚拟线程（Virtual Threads），作为 Loom 项目的核心成果，旨在从根本上颠覆这一现状。虚拟线程是一种由 JVM 管理的轻量级线程，它与平台线程（Platform Threads，即传统的 OS 线程）解耦。成千上万甚至数百万个虚拟线程可以被调度运行在少数几个平台线程之上。当一个虚拟线程执行 I/O 操作（如等待数据库响应或调用外部 API）而被阻塞时，JVM 会自动将其挂起，并让其底层的平台线程去执行其他就绪的虚拟线程。\n\n**这究竟是革命还是噱头？**\n\n* **性能革命的体现**：对于 I/O 密集型应用，虚拟线程是名副其实的革命。它让开发者能够以最直观、最简单的“一个请求一个线程”的同步阻塞式代码，达到甚至超越以往异步编程才能实现的高吞吐量。这极大地降低了高并发编程的门槛，提升了代码的可读性和可维护性。基准测试表明，在处理大量短时网络连接时，使用虚拟线程的应用性能可提升数倍乃至一个数量级。\n* **非银弹，需警惕“噱头”论**：虚拟线程并非万能药。对于 CPU 密集型任务（如复杂的计算、加解密等），由于任务本身会持续占用 CPU，虚拟线程无法发挥其优势，此时使用传统的平台线程池可能更为合适。此外，一些旧的库和代码实践，如在 `synchronized` 同步块中执行长时间的 I/O 操作，可能会导致平台线程被“钉死”（Pinning），从而影响虚拟线程的调度效率。\n\n**结论**：虚拟线程绝非营销噱头，它是 Java 平台在并发领域一次意义深远的进化。它精准地解决了长期以来困扰 Java 开发者的 I/O 并发难题，使得编写高性能、高吞吐量的网络应用变得前所未有的简单。然而，开发者仍需清醒地认识到它的适用场景，并注意避开相关的技术陷阱，才能真正将这场“性能革命”的红利收入囊中。",
       "author": {
         "id": "author-002",
         "name": "林志明",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-002"
+        "avatarUrl": "https://cravatar.cn/avatar/8f14e45fceea167a5a36dedd4bea2543?s=150&d=mp"
       },
       "imageUrl": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
       "detailInfo": {
@@ -49,11 +49,11 @@
       "type": "article",
       "articleId": null,
       "title": "MyBatis Plus 与原生 Mybatis：我们该如何选择？",
-      "content": "MyBatis Plus 提供了大量便捷的 CRUD 操作，极大地简化了开发。但这是否意味着我们应该完全放弃原生 Mybatis？",
+      "content": "MyBatis 作为一个优秀的持久层框架，其最大的特点就是让开发者可以完全掌控 SQL。通过将 SQL 语句写在 XML 映射文件中，实现了业务逻辑与 SQL 的解耦，同时又保留了直接优化 SQL 的灵活性。然而，对于大量简单、重复的单表 CRUD（增删改查）操作，手写这些 SQL 既枯燥又容易出错。\n\nMyBatis Plus (MP) 正是为了解决这一痛点而诞生的。它并非要取代 MyBatis，而是作为其“增强工具”，旨在“简化开发，提高效率”。MP 的核心理念是约定优于配置，它内置了通用的 CRUD 功能，并提供了强大的条件构造器。\n\n**MyBatis Plus 的核心优势：**\n\n1.  **无 SQL 的 CRUD**：只需让 Mapper 接口继承 `BaseMapper`，即可免费获得 `insert`, `deleteById`, `updateById`, `selectById`, `selectList` 等十几个开箱即用的方法，无需编写任何 SQL 代码，极大提升了开发效率。\n2.  **强大的条件构造器**：通过 `QueryWrapper` 或 `LambdaQueryWrapper`，开发者可以用链式调用的方式，以面向对象的形式构建复杂的查询条件，既避免了拼接 SQL 的风险，又能在编译期进行类型检查（Lambda 方式）。\n3.  **丰富的功能插件**：MP 内置了分页插件、乐观锁插件、逻辑删除等实用功能，只需简单配置即可使用，省去了开发者自己实现这些通用逻辑的麻烦。\n\n**为何不应完全放弃原生 Mybatis？**\n\n尽管 MyBatis Plus 功能强大，但在某些场景下，回归原生 Mybatis 的 XML 写法依然是更优选择：\n1.  **极端复杂的 SQL**：当遇到包含多表连接、子查询、临时表、数据库特定函数等极其复杂的报表类或统计类查询时，使用 `QueryWrapper` 可能会变得非常臃肿和难以理解。此时，在 XML 中直接编写和优化手写的 SQL 语句，会更加清晰直观、性能更可控。\n2.  **团队规范与 DBA 协同**：在一些对数据库操作有严格审计和规范的团队中，要求所有 SQL 必须显式地写在 XML 中以便于 DBA 审核和优化。\n\n**最佳实践：融合之道**\n\n聪明的开发者从不做“二选一”的决定。最佳实践是将两者结合起来：**使用 MyBatis Plus 处理项目中 80% 的单表、常规查询，以最大化提升开发效率；同时，将剩余 20% 的复杂、高性能要求的 SQL 查询，交由原生的 MyBatis XML 文件来精雕细琢。** 这种混合模式既能享受到 MP 带来的便捷，又不失 MyBatis 原生的灵活性和强大控制力，是现代 Java 项目中的主流选择。",
       "author": {
         "id": "author-003",
         "name": "黃曉玲",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-003"
+        "avatarUrl": "https://cravatar.cn/avatar/c3499c2729730a7f807efb8676a92dcb?s=150&d=mp"
       },
       "imageUrl": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop",
       "detailInfo": {
@@ -71,11 +71,11 @@
       "type": "article",
       "articleId": null,
       "title": "SpringBoot 中的事务管理：@Transactional 的正确用法",
-      "content": "声明式事务是 Spring 的核心特性之一。然而，@Transactional 注解的错误使用可能会导致事务失效，本文总结了几个常见误区。",
+      "content": "在企业级应用开发中，数据的一致性和完整性至关重要。Spring 框架提供的声明式事务管理，特别是 `@Transactional` 注解，让开发者可以从繁琐的编程式事务代码中解脱出来，只需一个注解就能优雅地为业务方法添加事务控制。然而，这个看似简单的注解背后，依赖于 Spring AOP（面向切面编程）的代理机制，如果对其工作原理理解不深，就很容易陷入误区，导致事务在不经意间失效。\n\n**常见误区与正确用法：**\n\n1.  **误区一：注解用在非 public 方法上**\n    Spring AOP 是通过生成代理对象来拦截方法调用的。在默认配置下，只有对 `public` 方法的外部调用才能被代理拦截。如果将 `@Transactional` 标注在 `private` 或 `protected` 方法上，事务将不会生效。\n    * **正确用法**：始终将 `@Transactional` 应用在 `public` 方法上。\n\n2.  **误区二：方法内部调用（自调用）**\n    当一个类中的 `public` 方法 A 调用同一个类中的另一个 `public @Transactional` 方法 B 时，方法 B 的事务会失效。这是因为这种调用是对象内部的 `this.methodB()` 调用，它没有经过 Spring 的代理对象，而是直接调用了原始对象的方法，AOP 拦截自然也就不存在了。\n    * **正确用法**：将事务方法（方法 B）提取到另一个独立的 Spring Bean 中，然后在当前类中注入该 Bean 并进行调用。\n\n3.  **误区三：异常被 `try-catch` 吞掉**\n    Spring 事务的默认回滚策略是：只有当方法抛出 `RuntimeException` 或 `Error` 时，事务才会回滚。如果在事务方法内部使用了 `try-catch` 块捕获了异常却没有重新抛出，Spring 的事务切面会认为方法正常执行完毕，从而提交事务，导致数据不一致。\n    * **正确用法**：在 `catch` 块中处理完异常后，向上抛出 `RuntimeException` 或其子类，或者通过 `TransactionAspectSupport.currentTransactionStatus().setRollbackOnly()` 以编程方式标记事务为回滚。\n\n4.  **误区四：不明确的异常回滚规则**\n    如上所述，Spring 默认不回滚受检异常（Checked Exception，如 `IOException`, `SQLException`）。如果业务逻辑中抛出了受检异常，而你希望它也能触发回滚，就需要明确指定。\n    * **正确用法**：使用 `@Transactional(rollbackFor = Exception.class)` 来指定任何异常都触发回滚，或指定特定的受检异常类。\n\n**结论**：`@Transactional` 注解是 Spring 提供的一把利器，但它并非没有规则的“魔法”。要正确地驾驭它，开发者必须理解其基于 AOP 代理的工作原理，并牢记上述几个关键的实践要点：确保方法可见性、避免自调用、正确处理异常以及明确回滚规则。只有这样，才能确保应用的事务行为符合预期，真正保障数据的安全可靠。",
       "author": {
         "id": "author-004",
         "name": "張偉",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-004"
+        "avatarUrl": "https://cravatar.cn/avatar/a1d0c6e83f027327d8461063f4ac58a6?s=150&d=mp"
       },
       "imageUrl": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop",
       "detailInfo": {
@@ -85,248 +85,6 @@
         "likeNum": 890,
         "commentNum": 1,
         "publicDate": "1748677155448"
-      },
-      "reply": []
-    },
-    {
-      "id": "5",
-      "type": "article",
-      "articleId": null,
-      "title": "前端工程化：Vite vs. Webpack",
-      "content": "Vite 凭借其极速的冷启动和热更新，正成为新一代前端构建工具的标杆。它与传统的 Webpack 相比，究竟有何优势？",
-      "author": {
-        "id": "author-005",
-        "name": "李婷婷",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-005"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1894&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 33,
-        "ifLike": false,
-        "likeNum": 128,
-        "commentNum": 2,
-        "publicDate": "1747803555448"
-      },
-      "reply": []
-    },
-    {
-      "id": "6",
-      "type": "article",
-      "articleId": null,
-      "title": "使用 Ant Design 构建优雅的后台管理界面",
-      "content": "Ant Design 提供了丰富、高质量的组件，是快速构建企业级后台应用的不二之选。本教程将带你从零开始...",
-      "author": {
-        "id": "author-001",
-        "name": "陳怡君",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-001"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": true,
-        "bookmarks": 198,
-        "ifLike": true,
-        "likeNum": 450,
-        "commentNum": 1,
-        "publicDate": "1746929955448"
-      },
-      "reply": []
-    },
-    {
-      "id": "7",
-      "type": "article",
-      "articleId": null,
-      "title": "微服务架构下的 API 网关选型：Spring Cloud Gateway 实践",
-      "content": "API 网关是微服务架构的入口，负责路由、认证、限流等关键功能。本文重点介绍 Spring Cloud Gateway 的使用和配置技巧。",
-      "author": {
-        "id": "author-002",
-        "name": "林志明",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-002"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 76,
-        "ifLike": false,
-        "likeNum": 234,
-        "commentNum": 2,
-        "publicDate": "1746056355448"
-      },
-      "reply": []
-    },
-    {
-      "id": "8",
-      "type": "article",
-      "articleId": null,
-      "title": "TypeScript 泛型编程：从入门到精通",
-      "content": "泛型是 TypeScript 类型系统中最强大的工具之一，它能帮助我们编写出灵活、可复用且类型安全的代码。",
-      "author": {
-        "id": "author-006",
-        "name": "王文雄",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-006"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": true,
-        "bookmarks": 501,
-        "ifLike": true,
-        "likeNum": 1230,
-        "commentNum": 1,
-        "publicDate": "1745182755448"
-      },
-      "reply": []
-    },
-    {
-      "id": "9",
-      "type": "article",
-      "articleId": null,
-      "title": "深入理解 React 的 Diffing 算法",
-      "content": "React 的高效更新离不开其独特的 Diffing 算法。本文将为你揭示其工作原理，以及如何通过 key 属性进行优化。",
-      "author": {
-        "id": "author-007",
-        "name": "吳靜宜",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-007"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 88,
-        "ifLike": true,
-        "likeNum": 310,
-        "commentNum": 2,
-        "publicDate": "1744309155448"
-      },
-      "reply": []
-    },
-    {
-      "id": "10",
-      "type": "article",
-      "articleId": null,
-      "title": "Docker 与 K8s：容器化技术的现代战争",
-      "content": "从单体应用到微服务，容器化技术扮演了至关重要的角色。Docker 和 Kubernetes 是这个领域的两大巨头，它们之间有何异同？",
-      "author": {
-        "id": "author-008",
-        "name": "劉俊彥",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-008"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1894&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": true,
-        "bookmarks": 678,
-        "ifLike": true,
-        "likeNum": 1500,
-        "commentNum": 1,
-        "publicDate": "1743435555448"
-      },
-      "reply": []
-    },
-    {
-      "id": "11",
-      "type": "article",
-      "articleId": null,
-      "title": "使用 CSS Grid 布局构建响应式网页",
-      "content": "忘记 Flexbox 吧（开个玩笑）！CSS Grid 提供了更强大的二维布局能力，是构建复杂响应式页面的终极武器。",
-      "author": {
-        "id": "author-009",
-        "name": "蔡佳宏",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-009"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 123,
-        "ifLike": false,
-        "likeNum": 289,
-        "commentNum": 2,
-        "publicDate": "1742561955448"
-      },
-      "reply": []
-    },
-    {
-      "id": "12",
-      "type": "article",
-      "articleId": null,
-      "title": "Node.js 异步编程：从回调到 Async/Await",
-      "content": "Node.js 的核心在于其非阻塞 I/O 模型。本文回顾了 Node.js 异步编程的演进历史，从回调地狱到 Promise，再到优雅的 Async/Await。",
-      "author": {
-        "id": "author-010",
-        "name": "楊淑芬",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-010"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": true,
-        "bookmarks": 341,
-        "ifLike": true,
-        "likeNum": 765,
-        "commentNum": 1,
-        "publicDate": "1741688355448"
-      },
-      "reply": []
-    },
-    {
-      "id": "13",
-      "type": "article",
-      "articleId": null,
-      "title": "GraphQL 入门：一种为 API 而生的查询语言",
-      "content": "GraphQL 正在颠覆传统的 RESTful API 设计理念。它允许客户端精确地请求所需数据，不多不少，从而提升应用性能和开发效率。",
-      "author": {
-        "id": "author-011",
-        "name": "許家豪",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-011"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 210,
-        "ifLike": true,
-        "likeNum": 555,
-        "commentNum": 2,
-        "publicDate": "1740814755448"
-      },
-      "reply": []
-    },
-    {
-      "id": "14",
-      "type": "article",
-      "articleId": null,
-      "title": "WebAssembly（Wasm）如何赋能前端应用",
-      "content": "WebAssembly 正在为 Web 平台带来接近原生的性能。它不是 JavaScript 的替代品，而是其强大的伙伴。本文探讨了 Wasm 的应用场景。",
-      "author": {
-        "id": "author-012",
-        "name": "鄭美玲",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-012"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": true,
-        "bookmarks": 188,
-        "ifLike": false,
-        "likeNum": 432,
-        "commentNum": 1,
-        "publicDate": "1739941155448"
-      },
-      "reply": []
-    },
-    {
-      "id": "15",
-      "type": "article",
-      "articleId": null,
-      "title": "Next.js vs. Remix：全栈 React 框架的对决",
-      "content": "服务端渲染（SSR）和静态站点生成（SSG）是提升 React 应用性能和 SEO 的关键。Next.js 和 Remix 是该领域的两大热门框架...",
-      "author": {
-        "id": "author-001",
-        "name": "陳怡君",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-001"
-      },
-      "imageUrl": "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1894&auto=format&fit=crop",
-      "detailInfo": {
-        "ifBookMark": false,
-        "bookmarks": 402,
-        "ifLike": true,
-        "likeNum": 987,
-        "commentNum": 2,
-        "publicDate": "1739067555448"
       },
       "reply": []
     }
@@ -339,7 +97,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -356,7 +114,7 @@
       "author": {
         "id": "author-002",
         "name": "林志明",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-002"
+        "avatarUrl": "https://cravatar.cn/avatar/8f14e45fceea167a5a36dedd4bea2543?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -373,7 +131,7 @@
       "author": {
         "id": "author-005",
         "name": "李婷婷",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-005"
+        "avatarUrl": "https://cravatar.cn/avatar/1f0e3dad99908345f7439f8ffabdffc4?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -390,7 +148,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -407,7 +165,7 @@
       "author": {
         "id": "author-004",
         "name": "張偉",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-004"
+        "avatarUrl": "https://cravatar.cn/avatar/a1d0c6e83f027327d8461063f4ac58a6?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -424,7 +182,7 @@
       "author": {
         "id": "author-003",
         "name": "黃曉玲",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-003"
+        "avatarUrl": "https://cravatar.cn/avatar/c3499c2729730a7f807efb8676a92dcb?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -441,7 +199,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -458,7 +216,7 @@
       "author": {
         "id": "author-006",
         "name": "王文雄",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-006"
+        "avatarUrl": "https://cravatar.cn/avatar/4a8a08f09d37b73795649038408b5f33?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -475,7 +233,7 @@
       "author": {
         "id": "author-008",
         "name": "劉俊彥",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-008"
+        "avatarUrl": "https://cravatar.cn/avatar/0d751509176390886cde07a216f24610?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -492,7 +250,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -509,7 +267,7 @@
       "author": {
         "id": "author-009",
         "name": "蔡佳宏",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-009"
+        "avatarUrl": "https://cravatar.cn/avatar/3d21f3f8033bf26814b988f17ab89b3f?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -526,7 +284,7 @@
       "author": {
         "id": "author-001",
         "name": "陳怡君",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-001"
+        "avatarUrl": "https://cravatar.cn/avatar/d41d8cd98f00b204e9800998ecf8427e?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -543,7 +301,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -560,7 +318,7 @@
       "author": {
         "id": "author-010",
         "name": "楊淑芬",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-010"
+        "avatarUrl": "https://cravatar.cn/avatar/55502f40dc8b7c7698806507221b65b9?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -577,7 +335,7 @@
       "author": {
         "id": "author-003",
         "name": "黃曉玲",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-003"
+        "avatarUrl": "https://cravatar.cn/avatar/c3499c2729730a7f807efb8676a92dcb?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -594,7 +352,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -611,7 +369,7 @@
       "author": {
         "id": "author-005",
         "name": "李婷婷",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-005"
+        "avatarUrl": "https://cravatar.cn/avatar/1f0e3dad99908345f7439f8ffabdffc4?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -628,7 +386,7 @@
       "author": {
         "id": "author-007",
         "name": "吳靜宜",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-007"
+        "avatarUrl": "https://cravatar.cn/avatar/7e7454ebb32d43d6a695d36e7a4b8689?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -645,7 +403,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -662,7 +420,7 @@
       "author": {
         "id": "author-002",
         "name": "林志明",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-002"
+        "avatarUrl": "https://cravatar.cn/avatar/8f14e45fceea167a5a36dedd4bea2543?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -679,7 +437,7 @@
       "author": {
         "id": "author-011",
         "name": "許家豪",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-011"
+        "avatarUrl": "https://cravatar.cn/avatar/f4b3f3bc635f342784534cf882b78a01?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -696,7 +454,7 @@
       "author": {
         "id": "user-guest",
         "name": "访客",
-        "avatarUrl": "https://i.pravatar.cc/150?u=user-guest"
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": true,
@@ -713,7 +471,7 @@
       "author": {
         "id": "author-012",
         "name": "鄭美玲",
-        "avatarUrl": "https://i.pravatar.cc/150?u=author-012"
+        "avatarUrl": "https://cravatar.cn/avatar/87913531b782436279e83e9114f7b48c?s=150&d=mp"
       },
       "detailInfo": {
         "ifLike": false,
@@ -722,32 +480,49 @@
         "publicDate": "1739068655448"
       },
       "reply": []
+    },
+    {
+      "id": "1750583635736",
+      "articleId": "2",
+      "content": "1111111111",
+      "author": {
+        "id": "user-guest",
+        "name": "访客",
+        "avatarUrl": "https://cravatar.cn/avatar/6bc1685fde4a535b389f4b5952f4c332?s=150&d=mp"
+      },
+      "detailInfo": {
+        "ifLike": false,
+        "likeNum": 0,
+        "commentNum": 0,
+        "publicDate": "1750583635736"
+      },
+      "reply": []
     }
   ],
   "getImage": [
     {
       "url": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-      "id": "img-01",
+      "id": "1",
       "alt": "React Logo"
     },
     {
       "url": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
-      "id": "img-02",
+      "id": "2",
       "alt": "Java Code"
     },
     {
       "url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop",
-      "id": "img-03",
+      "id": "3",
       "alt": "Code on screen"
     },
     {
       "url": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop",
-      "id": "img-04",
+      "id": "4",
       "alt": "Laptop with code"
     },
     {
       "url": "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1894&auto=format&fit=crop",
-      "id": "img-05",
+      "id": "5",
       "alt": "Server racks"
     }
   ],
@@ -755,84 +530,84 @@
     {
       "id": "author-001",
       "name": "陳怡君",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-001",
+      "avatarUrl": "https://cravatar.cn/avatar/d41d8cd98f00b204e9800998ecf8427e?s=150&d=mp",
       "popular": 998,
       "followerNum": 85432
     },
     {
       "id": "author-002",
       "name": "林志明",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-002",
+      "avatarUrl": "https://cravatar.cn/avatar/8f14e45fceea167a5a36dedd4bea2543?s=150&d=mp",
       "popular": 985,
       "followerNum": 82109
     },
     {
       "id": "author-003",
       "name": "黃曉玲",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-003",
+      "avatarUrl": "https://cravatar.cn/avatar/c3499c2729730a7f807efb8676a92dcb?s=150&d=mp",
       "popular": 979,
       "followerNum": 78556
     },
     {
       "id": "author-004",
       "name": "張偉",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-004",
+      "avatarUrl": "https://cravatar.cn/avatar/a1d0c6e83f027327d8461063f4ac58a6?s=150&d=mp",
       "popular": 962,
       "followerNum": 75021
     },
     {
       "id": "author-005",
       "name": "李婷婷",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-005",
+      "avatarUrl": "https://cravatar.cn/avatar/1f0e3dad99908345f7439f8ffabdffc4?s=150&d=mp",
       "popular": 958,
       "followerNum": 69880
     },
     {
       "id": "author-006",
       "name": "王文雄",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-006",
+      "avatarUrl": "https://cravatar.cn/avatar/4a8a08f09d37b73795649038408b5f33?s=150&d=mp",
       "popular": 941,
       "followerNum": 68123
     },
     {
       "id": "author-007",
       "name": "吳靜宜",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-007",
+      "avatarUrl": "https://cravatar.cn/avatar/7e7454ebb32d43d6a695d36e7a4b8689?s=150&d=mp",
       "popular": 927,
       "followerNum": 65432
     },
     {
       "id": "author-008",
       "name": "劉俊彥",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-008",
+      "avatarUrl": "https://cravatar.cn/avatar/0d751509176390886cde07a216f24610?s=150&d=mp",
       "popular": 903,
       "followerNum": 61098
     },
     {
       "id": "author-009",
       "name": "蔡佳宏",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-009",
+      "avatarUrl": "https://cravatar.cn/avatar/3d21f3f8033bf26814b988f17ab89b3f?s=150&d=mp",
       "popular": 886,
       "followerNum": 58774
     },
     {
       "id": "author-010",
       "name": "楊淑芬",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-010",
+      "avatarUrl": "https://cravatar.cn/avatar/55502f40dc8b7c7698806507221b65b9?s=150&d=mp",
       "popular": 871,
       "followerNum": 55123
     },
     {
       "id": "author-011",
       "name": "許家豪",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-011",
+      "avatarUrl": "https://cravatar.cn/avatar/f4b3f3bc635f342784534cf882b78a01?s=150&d=mp",
       "popular": 854,
       "followerNum": 52001
     },
     {
       "id": "author-012",
       "name": "鄭美玲",
-      "avatarUrl": "https://i.pravatar.cc/150?u=author-012",
+      "avatarUrl": "https://cravatar.cn/avatar/87913531b782436279e83e9114f7b48c?s=150&d=mp",
       "popular": 849,
       "followerNum": 49876
     }

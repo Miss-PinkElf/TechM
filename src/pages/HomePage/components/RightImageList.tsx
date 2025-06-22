@@ -7,27 +7,27 @@ import { Link } from 'react-router-dom';
 const data = [
   {
     "url": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?q=80&w=2070&auto=format&fit=crop",
-    "id": "img-01",
+    "id": "1",
     "alt": "React Logo"
   },
   {
     "url": "https://images.unsplash.com/photo-1522252234503-e356532cafd5?q=80&w=1925&auto=format&fit=crop",
-    "id": "img-02",
+    "id": "2",
     "alt": "Java Code"
   },
   {
     "url": "https://images.unsplash.com/photo-1542831371-29b0f74f9713?q=80&w=2070&auto=format&fit=crop",
-    "id": "img-03",
+    "id": "3",
     "alt": "Code on screen"
   },
   {
     "url": "https://images.unsplash.com/photo-1515879218367-8466d910aaa4?q=80&w=2069&auto=format&fit=crop",
-    "id": "img-04",
+    "id": "4",
     "alt": "Laptop with code"
   },
   {
     "url": "https://images.unsplash.com/photo-1550063873-ab792950096b?q=80&w=1894&auto=format&fit=crop",
-    "id": "img-05",
+    "id": "5",
     "alt": "Server racks"
   }
 ]
@@ -59,7 +59,7 @@ const RightImageList: React.FC = () => {
           renderItem={(item) => (
             <List.Item key={item.id} style={{ display: 'flex', justifyContent: 'center' }}>
 
-              <Link to={"/article/23"}>
+              <Link to={`/article/${item.id}`}>
                 <Popover content={`${item.alt}`}>
                   <img
                     src={item.url}

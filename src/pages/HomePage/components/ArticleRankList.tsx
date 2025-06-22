@@ -5,12 +5,13 @@ import { getAllArticleOverviewAPI, getAuthorRank } from "../../../utils/request"
 import './index.css'
 import InfiniteScroll from "react-infinite-scroll-component";
 const tabsRank = ['博主榜', '评价榜', '收藏榜']
-type renderProp = { item: any, index: number, orderKey: string }
+type renderProp = { item: any, index: number, orderKey: number }
 
 const getRankClassName = (index: number): string => {
   return index < 3 ? `rank rank-${index}` : `rank`
 }
-const AuthorRankTemplate: React.FC<{ item: AuthorRank, index: number, orderKey: string }> = ({ item, index, orderKey }) => {
+
+const AuthorRankTemplate: React.FC<{ item: AuthorRank, index: number, orderKey: number }> = ({ item, index, orderKey }) => {
   return (
     <List.Item
       key='id'
@@ -23,7 +24,8 @@ const AuthorRankTemplate: React.FC<{ item: AuthorRank, index: number, orderKey: 
       <div style={{ display: 'flex', alignItems: 'center' }}>
         <div className={getRankClassName(index)}>{index + 1}</div>
         <List.Item.Meta
-          avatar={<Avatar src={item.avatarUrl} size="large" style={{ top: '9px' }} />}
+          avatar={<Avatar src={item.avatarUrl} size="large" style={{ top: '9px' }} alt={item.name}
+          />}
           title={
 
             <a href={`/author/${item.id}`} style={{ paddingTop: '10px' }}>
@@ -42,13 +44,13 @@ const AuthorRankTemplate: React.FC<{ item: AuthorRank, index: number, orderKey: 
     </List.Item >
   )
 }
-const ArticleRankTemplate: React.FC<{ item: Article, index: number, orderKey: string }> = ({ item, index, orderKey }) => {
+const ArticleRankTemplate: React.FC<{ item: Article, index: number, orderKey: number }> = ({ item, index, orderKey }) => {
   return (
     <List.Item
       key='id'
       extra={
         <div style={{ textAlign: 'right', color: 'red' }}>
-          🔥{item.detailInfo.bookmarks}
+          🔥{orderKey === 1 ? item.detailInfo.commentNum : item.detailInfo.bookmarks}
         </div>
       }
     >
@@ -87,14 +89,14 @@ const ArticleRankList: React.FC = () => {
 
   const getArticleRankByCommentList = async (): Promise<Article[]> => {
     console.log('-----orderByComment--------');
-    const res_articles = (await getAllArticleOverviewAPI(1, 7)).data
-    return res_articles;
+    const res_articles: Article[] = (await getAllArticleOverviewAPI(1, 7)).data
+    return res_articles.sort((a, b) => b.detailInfo.commentNum - a.detailInfo.commentNum);
   }
   const getArticleRankByMarkList = async (): Promise<Article[]> => {
     console.log('-----orderByMark--------');
-    const res_articles = (await getAllArticleOverviewAPI(1, 7)).data
+    const res_articles: Article[] = (await getAllArticleOverviewAPI(1, 7)).data
     console.log('--ByMark--', res_articles);
-    return res_articles;
+    return res_articles.sort((a, b) => b.detailInfo.bookmarks! - a.detailInfo.bookmarks!);
   }
   const getAuthorRankList = async (): Promise<AuthorRank[]> => {
     const res_authors = (await getAuthorRank()).data
@@ -129,17 +131,17 @@ const ArticleRankList: React.FC = () => {
   const renderListItem = (item: any, index: number) => {
     switch (activeTab) {
       case 0:
-        return <AuthorRankTemplate item={item as AuthorRank} index={index} orderKey="1" />;
+        return <AuthorRankTemplate item={item as AuthorRank} index={index} orderKey={0} />;
       case 1:
-        return <ArticleRankTemplate item={item as Article} index={index} orderKey="comment" />;
+        return <ArticleRankTemplate item={item as Article} index={index} orderKey={1} />;
       case 2:
-        return <ArticleRankTemplate item={item as Article} index={index} orderKey="bookmark" />;
+        return <ArticleRankTemplate item={item as Article} index={index} orderKey={2} />;
       default:
         return null;
     }
   }
   return (
-    <div>
+    <div style={{ height: '400px' }}>
       <div style={{ display: 'flex', gap: '24px', borderBottom: '1px solid #f0f0f0', paddingBottom: '12px', marginBottom: '12px' }}>
         {tabsRank.map((tabName, index) => (
           <span
@@ -166,7 +168,7 @@ const ArticleRankList: React.FC = () => {
 
         }}
         loader={<Skeleton avatar paragraph={{ rows: 1 }} active />}
-        height={500}
+        height={850}
         endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
       >
         <List
@@ -174,7 +176,7 @@ const ArticleRankList: React.FC = () => {
           rowKey='id'
           itemLayout="vertical"
           renderItem={(item, index) => {
-            return (tabRankOrderMap.get(activeTab)!({ item: item, index: index, orderKey: '' }))
+            return (tabRankOrderMap.get(activeTab)!({ item: item, index: index, orderKey: activeTab }))
           }}
         />
       </InfiniteScroll>

@@ -1,6 +1,6 @@
 import React, { useCallback, useState } from 'react';
 import { AutoComplete, Avatar, Layout, Menu, Space, theme, Typography } from 'antd';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import Search from 'antd/es/input/Search';
 import { UserOutlined } from '@ant-design/icons';
 import { title } from 'process';
@@ -18,6 +18,7 @@ const LayoutPage: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [searchInfo, setSearchInfo] = useState('');
   const [options, setOptions] = useState<{ value: string; label: React.ReactNode }[]>([]);
+  const navigate = useNavigate();
   //
   const debounce = (fn: Function, t: number) => {
     let t_id: any = null;
@@ -74,7 +75,9 @@ const LayoutPage: React.FC = () => {
     setOptions(data.map(val => renderOption(val.title, val.id)));
   }
   const debounceHandleSearchSuggestions = useCallback(debounce(handleSearchSuggestions, 300), []);
+  const handleToHomePage = () => {
 
+  }
   return (
     <Layout style={{ minHeight: '100vh' }}> {/* 确保最外层布局占据整个视口高度 */}
       <Header style={{
@@ -84,8 +87,12 @@ const LayoutPage: React.FC = () => {
         borderBottom: '1px solid #f0f0f0' // 添加一个底部分割线
       }}>
 
-        <div className="logo" style={{ marginRight: '24px', fontWeight: 'bold', fontSize: '20px' }}>
-          TechM
+        <div className="logo" style={{ marginRight: '24px', fontWeight: 'bold', fontSize: '20px' }}
+        >
+          <Link to={'/'} style={{ color: 'black', textDecoration: 'none' }} >
+            TechM
+          </Link>
+
         </div>
 
         <Menu

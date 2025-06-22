@@ -21,7 +21,7 @@ const HomePage: React.FC = () => {
             <Row gutter={[24, 24]}>
               {/* 1. 轮播图横向 */}
               <Col span={24}>
-                <Card title="轮播图横向">
+                <Card title="专栏">
                   <ImageCircle></ImageCircle>
                 </Card>
               </Col>
@@ -40,7 +40,7 @@ const HomePage: React.FC = () => {
             <Row gutter={[24, 24]}>
               {/* 3. 轮播图竖向 */}
               <Col span={24}>
-                <Card title="轮播图竖向">
+                <Card title="科技日常">
                   <RightImageList />
                 </Card>
               </Col>
