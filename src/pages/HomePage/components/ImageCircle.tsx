@@ -5,11 +5,15 @@ import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import { Link } from "react-router-dom";
 import { Popover } from "antd";
 const bcgStyle: React.CSSProperties = {
-  height: '300px',
+  height: '500px',
   width: '100% ',
   backgroundColor: 'white',
   bottom: '0px',
-  overflow: 'hidden'
+  overflow: 'hidden',
+
+  display: 'flex',
+  justifyContent: 'center',
+  alignItems: 'center'
 };
 const footerLiStyle: React.CSSProperties = {
   width: "100px",
@@ -108,15 +112,24 @@ const ImageCircle: React.FC = () => {
       <div className="bcg" style={bcgStyle} onMouseEnter={handleMouseEnterBcg}
         onMouseLeave={handleMouseLeaveBcg}
       >
-        <Popover
-          content={imageList[imageIndex]?.id}
+
+        <Link
+          to={`/article/${imageList[imageIndex]?.id}`}
         >
-          <Link
-            to={`/article/${imageList[imageIndex]?.id}`}
-          >
-            <img src={imageList[imageIndex]?.url} alt="" style={{ height: "100%", }} />
-          </Link>
-        </Popover>
+
+          <img
+            src={imageList[imageIndex]?.url}
+            alt={imageList[imageIndex]?.alt}
+            style={{
+              width: '100%',
+              height: '100%',
+              objectFit: 'cover' // ✨ 核心属性！
+            }}
+          />
+
+
+        </Link>
+
 
 
       </div>

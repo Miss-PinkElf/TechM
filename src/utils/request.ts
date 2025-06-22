@@ -23,10 +23,14 @@ export const getCommentListAPI = (articleId: string) => {
   })
 }
 
-export const getAllArticleOverviewAPI = () => {
+export const getAllArticleOverviewAPI = (page: number, limit: number) => {
   return http({
     method: 'get',
-    url: '/articles'
+    url: '/articles',
+    params: {
+      _page: page,
+      _limit: limit,
+    }
   })
 }
 export const getAuthorRank = () => {

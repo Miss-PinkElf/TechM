@@ -87,12 +87,12 @@ const ArticleRankList: React.FC = () => {
 
   const getArticleRankByCommentList = async (): Promise<Article[]> => {
     console.log('-----orderByComment--------');
-    const res_articles = (await getAllArticleOverviewAPI()).data
+    const res_articles = (await getAllArticleOverviewAPI(1, 7)).data
     return res_articles;
   }
   const getArticleRankByMarkList = async (): Promise<Article[]> => {
     console.log('-----orderByMark--------');
-    const res_articles = (await getAllArticleOverviewAPI()).data
+    const res_articles = (await getAllArticleOverviewAPI(1, 7)).data
     console.log('--ByMark--', res_articles);
     return res_articles;
   }

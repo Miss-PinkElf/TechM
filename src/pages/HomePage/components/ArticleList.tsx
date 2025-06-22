@@ -32,10 +32,15 @@ const ArticleList: React.FC = () => {
   const [nowTabindex, setTabIndex] = useState(0)
   const [articleList, setArticleList] = useState<Article[]>([])
   const [loading, setLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [pageSize, setPageSize] = useState(4);
+  const [totalArticles, setTotalArticles] = useState(0);
   useEffect(() => {
     const getArticles = async () => {
-      const res_articles: [] = (await getAllArticleOverviewAPI()).data;
-      setArticleList(res_articles)
+      const res = (await getAllArticleOverviewAPI(currentPage, pageSize)).data;
+      setArticleList(res.data)
+      const total = parseInt(res.headers['x-total-count'] || '0', 10);
+      setTotalArticles(total);
     }
     getArticles();
     setLoading(false); // 请求结束后，取消 loading
@@ -47,6 +52,10 @@ const ArticleList: React.FC = () => {
     //应该做NPE
     setArticleList(tabsOrder.get(key)!);
   }
+  const handlePageChange = (page: number, pageSize: number) => {
+    setCurrentPage(page);
+    setPageSize(pageSize);
+  };
   return (
     <div>
       <div className="tab" >
@@ -67,6 +76,13 @@ const ArticleList: React.FC = () => {
           dataSource={articleList}
           rowKey='id'
           itemLayout="vertical"
+          pagination={{
+            current: currentPage,
+            pageSize: pageSize,
+            total: totalArticles,
+            onChange: handlePageChange, // 切换页面时调用
+            style: { textAlign: 'center' } // 让分页条居中
+          }}
           renderItem={(item) => {
             return (
               <List.Item
