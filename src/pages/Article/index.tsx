@@ -10,6 +10,7 @@ import { LikeOutlined, LikeFilled, StarOutlined, StarFilled } from '@ant-design/
 import './index.css'; // 引入自定义样式
 import { Author, MyComment } from "../../store/types";
 import { addCommentAPI } from "../../utils/request";
+import CommentItem from "./components/CommentItem";
 
 // CommentItem 现在可以直接在 List 的 renderItem 中实现，无需单独文件
 // import CommentItem from "./components/CommentItem";
@@ -241,31 +242,22 @@ const Article: React.FC = () => {
           </div>
 
         </div>
-        <List
-          dataSource={comments!}
-          locale={{ emptyText: <Empty description="暂无评论" /> }}
-          renderItem={item => (
-            <List.Item
-              actions={[
-                <Button
-                  type="text"
-                  size="small"
-                  icon={item.detailInfo.ifLike ? <LikeFilled style={{ color: '#1677ff' }} /> : <LikeOutlined />}
-                  onClick={() => handleToggleLikeComment(item.id)}
-                >
-                  {item.detailInfo.likeNum}
-                </Button>
-              ]}
-            >
-              <List.Item.Meta
-                avatar={<Avatar src={item.author.avatarUrl} />}
-                title={<Text strong>{item.author.name}</Text>}
-                description={item.content}
+        {/* --- 修改部分 --- */}
+        {/* 将 Antd 的 List 替换为我们自己的 CommentItem 组件的映射 */}
+        <div className="comment-list">
+          {comments && comments.length > 0 ? (
+            comments.map(comment => (
+              <CommentItem
+                key={comment.id}
+                comment={comment}
+                toggleLike={handleToggleLikeComment}
+                articleId={article.id}
               />
-              <Text type="secondary">{new Date(parseInt(item.detailInfo.publicDate)).toLocaleString()}</Text>
-            </List.Item>
+            ))
+          ) : (
+            <Empty description="暂无评论" />
           )}
-        />
+        </div>
       </Card>
     </div>
   );

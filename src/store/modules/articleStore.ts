@@ -57,6 +57,32 @@ export const addComment = createAsyncThunk('comments/addComment',
     }
   }
 )
+
+/**
+ * 这是一个递归辅助函数，用于在评论树中查找特定ID的评论，并对其执行一个操作。
+ * @param commentList - 要搜索的评论数组
+ * @param commentId - 要查找的评论ID
+ * @param mutator - 一个函数，接收找到的评论作为参数并对其进行修改
+ * @returns 如果找到并修改了评论，则返回 true
+ */
+const findCommentAndMutate = (
+  commentList: MyComment[],
+  commentId: string,
+  mutator: (comment: MyComment) => void
+): boolean => {
+  for (const comment of commentList) {
+    if (comment.id === commentId) {
+      mutator(comment);
+      return true;
+    }
+    // 如果当前评论有回复，则在回复中递归查找
+    if (comment.reply && findCommentAndMutate(comment.reply, commentId, mutator)) {
+      return true;
+    }
+  }
+  return false;
+};
+
 const findComment = (commentList: MyComment[], commentId: string): MyComment | null => {
   for (const comment of commentList) {
     if (comment.id === commentId)
@@ -105,6 +131,15 @@ const articleStore = createSlice({
       state.comments.push(newComment);
 
     },
+    addReplyToComment: (state, action: PayloadAction<{ parentId: string, reply: MyComment }>) => {
+      const { parentId, reply } = action.payload;
+      // 使用辅助函数找到父评论并添加回复
+      const parentComment = findComment(state.comments, parentId);
+      // 将新回复添加到回复列表的开头，以便最新回复显示在最上面
+      if (parentComment)
+        parentComment.reply.unshift(reply);
+
+    },
     toggleArticleMark: (state, action: PayloadAction<string>) => {
       //undefined.ifBookMark undefined不能赋值 （TypeError: Cannot set properties of undefined）。
       //state.article?.detailInfo.ifBookMark = !state.article?.detailInfo.ifBookMark;
@@ -143,5 +178,5 @@ const articleStore = createSlice({
 
   },
 })
-export const { toggleLikesComment, toggleArticleMark, toggleArticleLikes, addCommentLocal } = articleStore.actions;
+export const { toggleLikesComment, toggleArticleMark, addReplyToComment, toggleArticleLikes, addCommentLocal } = articleStore.actions;
 export default articleStore.reducer;
