@@ -29,8 +29,6 @@ const Article: React.FC = () => {
 
   const handleToggleArticleLike = () => {
     console.log('------articleLike', article?.detailInfo.ifLike);
-
-
     if (articleId) dispatch(toggleArticleLikes(articleId));
     console.log('------articleLike', article?.detailInfo.ifLike);
   };
